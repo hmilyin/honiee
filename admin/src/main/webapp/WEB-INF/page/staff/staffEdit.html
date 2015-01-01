@@ -1,0 +1,100 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/staff/staffUpdate.htm" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>员工编号：</label>
+				<input id="staffDto.staffCode" name="staffDto.staffCode" type="text" class="required" size="30" readonly="readonly" value="${staffDto.staffCode?default('')}"/>
+				<input id="staffDto.staffId" name="staffDto.staffId" type="hidden" value="${staffDto.staffId?default('')}"/>
+			</p>
+			<p>
+				<label>员工姓名：</label>
+				<input id="staffDto.staffName" name="staffDto.staffName" class="required" type="text" size="30" value="${staffDto.staffName?default('')}"/>
+			</p>
+			<p>
+			<label>性别</label>
+			<input id="staffDto.gender" name="staffDto.gender" value="${staffDto.gender?default('')}" type="text" size="30"/>
+			</p>
+			<p>
+				<label>办公电话：</label>
+				<input id="staffDto.officeTel" name="staffDto.officeTel" value="${staffDto.officeTel?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>办公手机：</label>
+				<input id="staffDto.officePhone" name="staffDto.officePhone" value="${staffDto.officePhone?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>办公Email：</label>
+				<input id="staffDto.officeEmail" name="staffDto.officeEmail" value="${staffDto.officeEmail?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人电话：</label>
+				<input id="staffDto.personalTel" name="staffDto.personalTel" value="${staffDto.personalTel?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人手机：</label>
+				<input id="staffDto.personalPhone" name="staffDto.personalPhone" value="${staffDto.personalPhone?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人Email：</label>
+				<input id="staffDto.personalEmail" name="staffDto.personalEmail" value="${staffDto.personalEmail?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>身份证：</label>
+				<input id="staffDto.idCard" name="staffDto.idCard" value="${staffDto.idCard?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>生日：</label>
+				<input id="staffDto.birthday" name="staffDto.birthday" value="${staffDto.birthday?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>学历：</label>
+				<input id="staffDto.education" name="staffDto.education" value="${staffDto.education?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>爱好：</label>
+				<input id="staffDto.hobby" name="staffDto.hobby" value="${staffDto.hobby?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>特长：</label>
+				<input id="staffDto.specialty" name="staffDto.specialty" value="${staffDto.specialty?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>邮编：</label>
+				<input id="staffDto.zipCode" name="staffDto.zipCode" value="${staffDto.zipCode?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>激活时间：</label>
+				<input id="staffDto.regeditDate" name="staffDto.regeditDate" value="${staffDto.regeditDate?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>创建时间：</label>
+				<input id="staffDto.createTime" name="staffDto.createTime" value="${staffDto.createTime?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>修改时间：</label>
+				<input id="staffDto.lastModifyTime" name="staffDto.lastModifyTime" value="${staffDto.lastModifyTime?default('')}" type="text" size="30" />
+			</p>
+			<dl>
+				<dt>家庭地址：</dt>
+				<dd>
+					<textarea id="staffDto.homeAddress" name="staffDto.homeAddress" value="${staffDto.homeAddress?default('')}" cols="80" rows="1" name="source"></textarea>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>个人履历：</dt>
+				<dd>
+					<textarea id="staffDto.training" name="staffDto.training" value="${staffDto.training?default('')}" cols="80" rows="5" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

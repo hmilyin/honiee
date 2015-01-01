@@ -1,0 +1,143 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/customer/customerSave.htm" class="pageForm required-validate" onsubmit="return validateCallback(this);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>客户编号：</label>
+				<input id="customerDto.customerCode" name="customerDto.customerCode" type="text" readonly="readonly" size="30" value="${customerDto.customerCode?default('')}"/>
+				<input id="customerDto.customerId" name="customerDto.customerId" type="hidden" value="${customerDto.customerId?default('')}"/>
+			</p>
+			<p>
+				<label>客户姓名：</label>
+				<input id="customerDto.customerName" name="customerDto.customerName" class="required" type="text" size="30" value="${customerDto.customerName?default('')}"/>
+			</p>
+			<p>
+				<label>客户类型：</label>
+				<select id="customerDto.customerType" name="customerDto.customerType">
+					<option value=-1>----请选择----</option>
+					<#if customerTypeEnumList?exists>
+						<#list customerTypeEnumList as enum>
+							<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>客户状态：</label>
+				<select id="customerDto.status" name="customerDto.status">
+					<option value=-1>----请选择----</option>
+					<#if customerStatusEnumList?exists>
+						<#list customerStatusEnumList as enum>
+							<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>激活状态：</label>
+				<select id="customerDto.activatStatus" name="customerDto.activatStatus">
+					<option value=-1>----请选择----</option>
+					<#if customerActivatStatusEnumList?exists>
+						<#list customerActivatStatusEnumList as enum>
+							<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>联系电话：</label>
+				<input id="customerDto.phone" name="customerDto.phone" value="${customerDto.phone?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>联系人：</label>
+				<input id="customerDto.contact" name="customerDto.contact" value="${customerDto.contact?default('')}" type="text" size="30"/>
+			</p>
+			<p>
+				<label>QQ号码：</label>
+				<input id="customerDto.qq" name="customerDto.qq" value="${customerDto.qq?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>身份证：</label>
+				<input id="customerDto.idCardNumber" name="customerDto.idCardNumber" value="${customerDto.idCardNumber?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>开户银行：</label>
+				<input id="customerDto.bankType" name="customerDto.bankType" value="${customerDto.bankType?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>银行账号：</label>
+				<input id="customerDto.bankAccount" name="customerDto.bankAccount" value="${customerDto.bankAccount?default('')}" type="text" size="30" />
+			</p>
+			<#if customerDto?exists&&customerDto.parentCustomerDto?exists>
+				<p>
+					<input type="hidden" id="customerDto.parentCustomerDto.customerId" name="customerDto.parentCustomerDto.customerId" value="${customerDto.parentCustomerDto.customerId?default('')}"/>
+					<input type="hidden" id="customerDto.parentCustomerDto.customerSequence" name="customerDto.parentCustomerDto.customerSequence" value="${customerDto.parentCustomerDto.customerSequence?default('')}"/>
+					<input type="hidden" id="customerDto.parentCustomerDto.level" name="customerDto.parentCustomerDto.level" value="${customerDto.parentCustomerDto.level?default('')}"/>
+					<label>上级客户编号：</label>
+					<input class="required" type="text" id="customerDto.parentCustomerDto.customerCode" name="customerDto.parentCustomerDto.customerCode" value="${customerDto.parentCustomerDto.customerCode?default('')}"/>
+					<a class="btnLook" href="${request.contextPath}/customer/parentCustomerLookup.htm" lookupGroup="customerDto.parentCustomerDto" lookupPk="customerId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>上级客户名称：</label>
+					<input type="text" id="customerDto.parentCustomerDto.customerName" name="customerDto.parentCustomerDto.customerName" value="${customerDto.parentCustomerDto.customerName?default('')}"/>
+				</p>
+			<#else>
+				<p>
+					<input type="hidden" id="customerDto.parentCustomerDto.customerId" name="customerDto.parentCustomerDto.customerId" value=""/>
+					<input type="hidden" id="customerDto.parentCustomerDto.customerSequence" name="customerDto.parentCustomerDto.customerSequence" value=""/>
+					<input type="hidden" id="customerDto.parentCustomerDto.level" name="customerDto.parentCustomerDto.level" value=""/>
+					<label>上级客户编号：</label>
+					<input class="required" type="text" id="customerDto.parentCustomerDto.customerCode" name="customerDto.parentCustomerDto.customerCode" value=""/>
+					<a class="btnLook" href="${request.contextPath}/customer/parentCustomerLookup.htm" lookupGroup="customerDto.parentCustomerDto" lookupPk="customerId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>上级客户名称：</label>
+					<input type="text" readonly="readonly" id="customerDto.parentCustomerDto.customerName" name="customerDto.parentCustomerDto.customerName" value=""/>
+				</p>
+			</#if>
+			<#if customerDto?exists&&customerDto.parentCustomerDto?exists>
+				<p>
+					<input type="hidden" id="customerDto.recommendCustomerDto.customerId" name="customerDto.recommendCustomerDto.customerId" value="${customerDto.recommendCustomerDto.customerId?default('')}"/>
+					<label>直推人编号：</label>
+					<input type="text" id="customerDto.recommendCustomerDto.customerCode" name="customerDto.recommendCustomerDto.customerCode" value="${customerDto.recommendCustomerDto.customerCode?default('')}"/>
+					<a class="btnLook" href="${request.contextPath}/customer/recommendCustomerLookup.htm" lookupGroup="customerDto.recommendCustomerDto" lookupPk="customerId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>直推人名称：</label>
+					<input type="text" readonly="readonly" id="customerDto.recommendCustomerDto.customerName" name="customerDto.recommendCustomerDto.customerName" value="${customerDto.recommendCustomerDto.customerName?default('')}"/>
+				</p>
+			<#else>
+				<p>
+					<input type="hidden" id="customerDto.recommendCustomerDto.customerId" name="customerDto.recommendCustomerDto.customerId" value=""/>
+					<label>直推人编号：</label>
+					<input class="required" type="text" id="customerDto.recommendCustomerDto.customerCode" name="customerDto.recommendCustomerDto.customerCode" value=""/>
+					<a class="btnLook" href="${request.contextPath}/customer/recommendCustomerLookup.htm" lookupGroup="customerDto.recommendCustomerDto" lookupPk="customerId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>直推人名称：</label>
+					<input type="text" readonly="readonly" id="customerDto.recommendCustomerDto.customerName" name="customerDto.recommendCustomerDto.customerName" value=""/>
+				</p>
+			</#if>
+			<dl>
+				<dt>联系地址：</dt>
+				<dd>
+					<textarea id="customerDto.address" name="customerDto.address" value="${customerDto.address?default('')}" cols="80" rows="3" name="source"></textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt>备注：</dt>
+				<dd>
+					<textarea id="customerDto.remark" name="customerDto.remark" value="${customerDto.remark?default('')}" cols="80" rows="3" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

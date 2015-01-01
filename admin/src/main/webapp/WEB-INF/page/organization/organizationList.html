@@ -1,0 +1,96 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/organization/organizationList.htm" id="organizationListForm" name="organizationListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						组织编号：<input id="organizationDto.organizationCode" name="organizationDto.organizationCode" value="${organizationDto.organizationCode?default('')}"/>
+					</td>
+					<td>
+						组织名称：<input id="organizationDto.organizationName" name="organizationDto.organizationName" value="${organizationDto.organizationName?default('')}"/>
+					</td>
+					<td>
+						组织等级：
+						<select id="organizationDto.organizationLevel" name="organizationDto.organizationLevel" onchange="">
+							<option value=-1>----请选择----</option>
+						<#if organizationLevelList?exists> 
+						<#list organizationLevelList as organizationLevel>
+						<#if organizationDto.organizationLevel?exists&&organizationDto.organizationLevel==organizationLevel.key>
+							<option value=${organizationLevel.key?default(-1)} selected="selected">${organizationLevel.value?default('')}</option>
+						<#else>
+							<option value=${organizationLevel.key?default(-1)}>${organizationLevel.value?default('')}</option>
+						</#if>
+						</#list> 
+						</#if>
+						</select>
+					</td>
+					<td>
+						组织类型：
+						<select id="organizationDto.organizationType" name="organizationDto.organizationType" onchange="">
+							<option value=-1>----请选择----</option>
+						<#if organizationTypeList?exists> 
+						<#list organizationTypeList as organizationType>
+						<#if organizationDto.organizationType?exists&&organizationDto.organizationType==organizationType.key>
+							<option value=${organizationType.key?default(-1)} selected="selected">${organizationType.value?default('')}</option>
+						<#else>
+							<option value=${organizationType.key?default(-1)}>${organizationType.value?default('')}</option>
+						</#if>
+						</#list> 
+						</#if>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/organization/organizationAdd.htm" target="navTab" rel="editEmployeeNavTab" title="新建员工"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/organization/organizationView.htm" target="navTab" rel="editEmployeeNavTab" title="修改员工"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/organization/organizationDelete.htm" target="ajaxTodo"  title="确定要删除吗?"><span>删除</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:;"><span>导入EXCEL</span></a></li>
+		</ul>
+	</div>
+	<table class="list" width="100%" layoutH="136">
+		<thead>
+			<tr>
+				<th width="30"><input type="checkbox" name="checkbox" value="checkbox" /></th>
+				<th width="12%">组织编号</th>
+				<th width="10%">组织名称</th>
+				<th width="10%">组织等级</th>
+				<th width="10%">组织类型</th>
+				<th width="15%">组织邮编</th>
+				<th >组织地址</th>
+			</tr>
+		</thead>
+		<tbody>
+		<#if organizationList?exists> 
+		<#list organizationList as organization>
+			<tr>
+				<td><input type="checkbox" name="checkbox2" value="${organization.organizationId?default('')}" /></td>
+				<td>${organization.organizationCode?default('')}</td>
+				<td>${organization.organizationName?default('')}</td>
+				<td>${organization.organizationLevel?default('')}</td>
+				<td>${organization.organizationType?default('')}</td>
+				<td>${organization.organizationZipCode?default('')}</td>
+				<td>${organization.organizationAddress?default('')}</td>
+			</tr>
+		</#list> 
+		</#if>
+		</tbody>
+	</table>
+	<div id="organizationListPaginationBar" name="organizationListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var organizationListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","organizationListPaginationBar","organizationListForm",'',"organizationListPagination");
+			organizationListPagination.render();
+		</script>
+	</div>
+</div>

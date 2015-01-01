@@ -1,0 +1,117 @@
+
+<div class="pageHeader">
+	<form action="${request.contextPath}/customer/customerFreezeList.htm" id="customerFreezeListForm" name="customerFreezeListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						客户编号：<input id="customerDto.customerCode" name="customerDto.customerCode" type="text" value="${customerDto.customerCode?default('')}"/>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						客户名称：<input id="customerDto.customerName" name="customerDto.customerName" type="text" value="${customerDto.customerName?default('')}"/>
+					</td>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						身份证：<input id="customerDto.idCardNumber" name="customerDto.idCardNumber" value="${customerDto.idCardNumber?default('')}" type="text"/> 
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						客户类型：
+						<select id="customerDto.customerType" name="customerDto.customerType">
+							<option value=-1>----请选择----</option>
+							<#if customerTypeEnumList?exists>
+								<#list customerTypeEnumList as enum>
+									<#if customerDto.customerType?exists&&customerDto.customerType==enum.key>
+										<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+									<#else>
+										<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+									</#if>
+								</#list>
+							</#if>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('customerFreezeListForm','${request.contextPath}/customer/customerSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="delete" href="${request.contextPath}/customer/customerFreezeAll.htm" title="确定要冻结这些客户吗?" target="selectedTodo" rel="ids"><span>冻结客户</span></a></li>
+		</ul>
+	</div>
+	<div layouth="145" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="10%">客户编号</th>
+					<th width="10%">客户名称</th>
+					<th width="8%">客户类型</th>
+					<th width="8%">客户状态</th>
+					<th width="8%">客户等级</th>
+					<th width="10%">联系电话</th>
+					<th width="15%">身份证</th>
+					<th width="8%">开户银行</th>
+					<th width="13%">银行账号</th>
+					<th width="10%">父级客户编号</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if customerList?exists> 
+			<#list customerList as customer>
+				<tr target="id" rel="${customer.customerId?default('')}">
+					<td><input type="checkbox" name="ids" value="${customer.customerId?default('')}" /></td>
+					<td>${customer.customerCode?default('')}</td>
+					<td><a href="${request.contextPath}/customer/customerView.htm?customerId=${customer.customerId?default('')}" target="navTab" rel="viewCustomerNavTab" title="客户详情">${customer.customerName?default('')}</a></td>
+					<td>
+						<#if customerTypeEnumList?exists>
+							<#list customerTypeEnumList as enum>
+								<#if customer.customerType?exists&&enum.key==customer.customerType>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>
+						<#if customerStatusEnumList?exists>
+							<#list customerStatusEnumList as enum>
+								<#if customer.status?exists&&enum.key==customer.status>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>${customer.level?default('')}级</td>
+					<td>${customer.phone?default('')}</td>
+					<td>${customer.idCardNumber?default('')}</td>
+					<td>${customer.bankType?default('')}</td>
+					<td>${customer.bankAccount?default('')}</td>
+					<#if customer.parentCustomerDto?exists>
+						<td>${customer.parentCustomerDto.customerCode?default('')}</td>
+					<#else>
+						<td></td>
+					</#if>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="customerFreezeListPaginationBar" name="customerFreezeListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var customerFreezeListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","customerFreezeListPaginationBar","customerFreezeListForm",'',"customerFreezeListPagination");
+			customerFreezeListPagination.render();
+		</script>
+	</div>
+</div>

@@ -1,0 +1,116 @@
+<form action="${request.contextPath}/position/positionSelect" id="positionSelectForm" name="positionSelectForm" onsubmit="return dialogSearch(this);" method="post">
+<div class="searchBar" >
+	<table class="searchContent">
+		<tr>
+			<td>
+				组织编号：<input id="positionDto.positionCode" name="positionDto.positionCode" value="${positionDto.positionCode?default('')}"/>
+			</td>
+			<td>
+				组织名称：<input id="positionDto.positionName" name="positionDto.positionName" value="${positionDto.positionName?default('')}"/>
+			</td>
+			<td>
+				组织等级：<select id="positionDto.positionLevel" name="positionDto.positionLevel" style="width:133px">
+					<option value=-1>---------请选择---------</option>
+				<#if positionLevelList?exists> 
+				<#list positionLevelList as positionLevel>
+					<#if positionLevel.key?exists&&positionDto.positionLevel?exists&&positionLevel.key==positionDto.positionLevel>
+						<option value=${positionLevel.key?default('-1')} selected="selected">${positionLevel.value?default('')}</option>
+					<#else>
+						<option value=${positionLevel.key?default('-1')}>${positionLevel.value?default('')}</option>
+					</#if>
+				</#list> 
+				</#if>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				组织类型：<select id="positionDto.positionType" name="positionDto.positionType" style="width:133px">
+					<option value=-1>---------请选择---------</option>
+				<#if positionTypeEnumList?exists> 
+				<#list positionTypeEnumList as positionType>
+					<#if positionType.key?exists&&positionDto.positionType?exists&&positionType.key==positionDto.positionType>
+						<option value=${positionType.key?default('-1')} selected="selected">${positionType.value?default('')}</option>
+					<#else>
+						<option value=${positionType.key?default('-1')}>${positionType.value?default('')}</option>
+					</#if>
+				</#list> 
+				</#if>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<div class="subBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			<li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>重置</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="page" style="margin-top:4px">
+	<div style="width:180px;position: absolute;left:5px" >
+		<div class="panelBar">
+			<ul class="toolBar">
+				<li><a class="delete" href="#" onclick=$('#selectpositionCheckBox').deleteSelectposition()><span>从选中列表中删除</span></a></li>
+			</ul>
+		</div>
+		<div id="aa" style="margin-top:7px">
+			已选组织结构列表
+		</div>
+		<div id="selectedpositionList" style="margin-top:1px" layoutH="160">
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$('#selectedpositionList').appendSelectElement("selectedposition","selectpositionCheckBox","${selectedposition}");
+			})
+		</script>
+		<!-- 
+		<select id="selectedpositionList" name="selectedpositionList" multiple="multiple" size="18"  style="width:180px">
+		</select> -->
+	</div>
+</form>
+	<div style="width:610px;margin-left:182px">
+		<div class="panelBar">
+			<ul class="toolBar">
+				<li><a class="add" href="javascript:;" onclick=$('#selectposition').addSelectposition("selectedposition","selectpositionCheckBox","selectedpositionList")><span>添加到选中列表</span></a></li>
+			</ul>
+		</div>
+		<table class="table" width="100%" layoutH="190">
+			<thead>
+				<tr>
+					<th width="25"><input type="checkbox" id="checkBox" name="checkBox" /></th>
+					<th width="12%">组织编号</th>
+					<th width="10%">组织名称</th>
+					<th width="10%">组织等级</th>
+					<th width="10%">组织类型</th>
+					<th width="15%">组织邮编</th>
+					<th >组织地址</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if positionList?exists> 
+			<#list positionList as position>
+				<tr>
+					<td><input type="checkbox" id="selectposition" name="selectposition" value="${position.positionId?default('')}:${position.positionName?default('')}" /></td>
+					<td>${position.positionCode?default('')}</td>
+					<td>${position.positionName?default('')}</td>
+					<td>${position.positionLevelView?default('')}</td>
+					<td>${position.positionTypeView?default('')}</td>
+					<td>${position.positionZipCode?default('')}</td>
+					<td>${position.positionAddress?default('')}</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+		<div id="positionSelectPaginationBar" name="positionSelectPaginationBar" class="panelBar" align="center">
+			<script type="text/javascript">
+				var positionSelectPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","positionSelectPaginationBar","positionSelectForm","dialog","positionSelectPagination");
+				positionSelectPagination.render();
+			</script>
+		</div>
+	</div>
+</div>
+<div class="panelBar" style="margin-top:4px">
+	<div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div>
+</div>

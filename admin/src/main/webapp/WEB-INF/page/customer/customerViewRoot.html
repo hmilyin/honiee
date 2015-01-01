@@ -1,0 +1,106 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/customer/customerView.htm?customerId=${customerDto.customerId?default('')}" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>客户编号：</label>
+				<input id="customerDto.customerCode" name="customerDto.customerCode" type="text" readonly="readonly" size="30" value="${customerDto.customerCode?default('')}"/>
+				<input id="customerDto.customerId" name="customerDto.customerId" type="hidden" value="${customerDto.customerId?default('')}"/>
+			</p>
+			<p>
+				<label>客户姓名：</label>
+				<input id="customerDto.customerName" name="customerDto.customerName" readonly="readonly" type="text" size="30" value="${customerDto.customerName?default('')}"/>
+			</p>
+			<p>
+				<label>客户类型：</label>
+				<#if customerTypeEnumList?exists>
+					<#assign customerTypeFlag = 1>
+					<#list customerTypeEnumList as enum>
+						<#if customerDto.customerType?exists&&customerDto.customerType==enum.key>
+							<input id="customerDto.customerType" name="customerDto.customerType" readonly="readonly" type="text" size="30" value="${enum.value?default('')}"/>
+							<#assign customerTypeFlag = 0>
+						</#if>
+					</#list>
+					<#if customerTypeFlag==1> 
+						<input id="customerDto.customerTypeFlag" name="customerDto.customerTypeFlag" readonly="readonly" type="text" size="30" value=""/>
+					</#if>
+				</#if>
+			</p>
+			<p>
+				<label>客户状态：</label>
+				<#if customerStatusEnumList?exists>
+					<#assign statusFlag = 1>
+					<#list customerStatusEnumList as enum>
+						<#if customerDto.status?exists&&customerDto.status==enum.key>
+							<input id="customerDto.status" name="customerDto.status" readonly="readonly" type="text" size="30" value="${enum.value?default('')}"/>
+							<#assign statusFlag = 0>
+						</#if>
+					</#list>
+					<#if statusFlag==1> 
+						<input id="customerDto.status" name="customerDto.status" readonly="readonly" type="text" size="30" value=""/>
+					</#if>
+				</#if>
+			</p>
+			<p>
+				<label>激活状态：</label>
+				<#if customerActivatStatusEnumList?exists>
+					<#assign statusFlag = 1>
+					<#list customerActivatStatusEnumList as enum>
+						<#if customerDto.activatStatus?exists&&customerDto.activatStatus==enum.key>
+							<input id="customerDto.activatStatus" name="customerDto.activatStatus" readonly="readonly" type="text" size="30" value="${enum.value?default('')}"/>
+							<#assign statusFlag = 0>
+						</#if>
+					</#list>
+					<#if statusFlag==1> 
+						<input id="customerDto.activatStatus" name="customerDto.activatStatus" readonly="readonly" type="text" size="30" value=""/>
+					</#if>
+				</#if>
+			</p>
+			<p>
+				<label>客户等级：</label>
+				<input id="customerDto.level" name="customerDto.level" readonly="readonly" value="1" type="text" size="30"/>
+			</p>
+			<p>
+				<label>联系电话：</label>
+				<input id="customerDto.phone" name="customerDto.phone" readonly="readonly" value="${customerDto.phone?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>联系人：</label>
+				<input id="customerDto.contact" name="customerDto.contact" readonly="readonly" value="${customerDto.contact?default('')}" type="text" size="30"/>
+			</p>
+			<p>
+				<label>QQ号码：</label>
+				<input id="customerDto.qq" name="customerDto.qq" readonly="readonly" value="${customerDto.qq?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>身份证：</label>
+				<input id="customerDto.idCardNumber" name="customerDto.idCardNumber" readonly="readonly" value="${customerDto.idCardNumber?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>开户银行：</label>
+				<input id="customerDto.bankType" name="customerDto.bankType" readonly="readonly" value="${customerDto.bankType?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>银行账号：</label>
+				<input id="customerDto.bankAccount" name="customerDto.bankAccount" readonly="readonly" value="${customerDto.bankAccount?default('')}" type="text" size="30" />
+			</p>
+			<dl>
+				<dt>联系地址：</dt>
+				<dd>
+					<textarea id="customerDto.address" name="customerDto.address" readonly="readonly" cols="80" rows="3" name="source">${customerDto.address?default('')}</textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt>备注：</dt>
+				<dd>
+					<textarea id="customerDto.remark" name="customerDto.remark" readonly="readonly" cols="80" rows="3" name="source">${customerDto.remark?default('')}</textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

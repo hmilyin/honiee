@@ -1,0 +1,99 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/position/positionList.htm" id="positionListForm" name="positionListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						组织编号：<input id="positionDto.positionCode" name="positionDto.positionCode" value="${positionDto.positionCode?default('')}"/>
+					</td>
+					<td>
+						组织名称：<input id="positionDto.positionName" name="positionDto.positionName" value="${positionDto.positionName?default('')}"/>
+					</td>
+					<td>
+						组织等级：
+						<select id="positionDto.positionLevel" name="positionDto.positionLevel" onchange="">
+							<option value=-1>----请选择----</option>
+						<#if positionLevelList?exists> 
+						<#list positionLevelList as positionLevel>
+						<#if positionDto.positionLevel?exists&&positionDto.positionLevel==positionLevel.key>
+							<option value=${positionLevel.key?default(-1)} selected="selected">${positionLevel.value?default('')}</option>
+						<#else>
+							<option value=${positionLevel.key?default(-1)}>${positionLevel.value?default('')}</option>
+						</#if>
+						</#list> 
+						</#if>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						组织类型：
+						<select id="positionDto.positionType" name="positionDto.positionType" onchange="">
+							<option value=-1>----请选择----</option>
+						<#if positionTypeList?exists> 
+						<#list positionTypeList as positionType>
+						<#if positionDto.positionType?exists&&positionDto.positionType==positionType.key>
+							<option value=${positionType.key?default(-1)} selected="selected">${positionType.value?default('')}</option>
+						<#else>
+							<option value=${positionType.key?default(-1)}>${positionType.value?default('')}</option>
+						</#if>
+						</#list> 
+						</#if>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+					<li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>重置</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="demo_page4.html" target="navTab"><span>添加</span></a></li>
+			<li><a class="delete" href="ajaxDone.html" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="demo_page4.html" target="navTab"><span>修改</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:;"><span>导入EXCEL</span></a></li>
+		</ul>
+	</div>
+	<table class="list" width="100%" layoutH="156">
+		<thead>
+			<tr>
+				<th width="30"><input type="checkbox" name="checkbox" value="checkbox" /></th>
+				<th width="12%">组织编号</th>
+				<th width="10%">组织名称</th>
+				<th width="10%">组织等级</th>
+				<th width="10%">组织类型</th>
+				<th width="15%">组织邮编</th>
+				<th >组织地址</th>
+			</tr>
+		</thead>
+		<tbody>
+		<#if positionList?exists> 
+		<#list positionList as position>
+			<tr>
+				<td><input type="checkbox" name="checkbox2" value="${position.positionId?default('')}" /></td>
+				<td>${position.positionCode?default('')}</td>
+				<td>${position.positionName?default('')}</td>
+				<td>${position.positionLevel?default('')}</td>
+				<td>${position.positionType?default('')}</td>
+				<td>${position.positionZipCode?default('')}</td>
+				<td>${position.positionAddress?default('')}</td>
+			</tr>
+		</#list> 
+		</#if>
+		</tbody>
+	</table>
+	<div id="positionListPaginationBar" name="positionListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var positionListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","positionListPaginationBar","positionListForm",'',"positionListPagination");
+			positionListPagination.render();
+		</script>
+	</div>
+</div>

@@ -1,0 +1,77 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/product/productList.htm" id="productListForm" name="productListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						产品名称：<input id="productDto.productName" name="productDto.productName" type="text" size="30" value="${productDto.productName?default('')}"/>
+					</td>
+					<td>
+						扩展名称：<input id="productDto.productExpandName" name="productDto.productExpandName" type="text" size="30" value="${productDto.productExpandName?default('')}"/>
+					</td>
+					<td>
+						商家产品编码：<input id="productDto.merchantProductCode" name="productDto.merchantProductCode" value="${productDto.merchantProductCode?default('')}" type="text" size="30" /> 
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('productListForm','${request.contextPath}/product/productSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/product/productAdd.htm" target="navTab" rel="addProductNavTab" title="新建产品"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/product/productEdit.htm?productId={id}" target="navTab" rel="editProductNavTab" title="修改产品"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/product/productDeleteAll.htm" title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+		</ul>
+	</div>
+	<div width="100%" layouth="117" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="20%">产品名称</th>
+					<th width="20%">扩展名称</th>
+					<th width="10%">类别</th>
+					<th width="10%">产品数量</th>
+					<th width="10%">基本价格</th>
+					<th width="30%">商家产品编码</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if productList?exists> 
+			<#list productList as product>
+				<tr target="id" rel="${product.productId?default('')}">
+					<td><input type="checkbox" name="ids" value="${product.productId?default('')}" /></td>
+					<td><a mask="true" href="${request.contextPath}/product/productView.htm?productId=${product.productId?default('')}" target="navTab" rel="viewProductNavTab" title="产品详情">${product.productName?default('')}</a></td>
+					<td>${product.productExpandName?default('')}</td>
+					<td>
+						<#if productCategoryEnumList?exists>
+							<#list productCategoryEnumList as enum>
+								<#if product.categoryId?exists&&product.categoryId==enum.key>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>${product.productTotalCount?default('')}</td>
+					<td>${product.basicPrice?default('')}</td>
+					<td>${product.merchantProductCode?default('')}</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="productListPaginationBar" name="productListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var productListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","productListPaginationBar","productListForm",'',"productListPagination");
+			productListPagination.render();
+		</script>
+	</div>
+</div>

@@ -1,0 +1,84 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/wage/wageList.htm" id="wageListForm" name="wageListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						客户编号：<input id="wageDto.customerCode" name="wageDto.customerCode" type="text" size="30" value="${wageDto.customerCode?default('')}"/>
+					</td>
+					<td>
+						客户名称：<input id="wageDto.customerName" name="wageDto.customerName" type="text" size="30" value="${wageDto.customerName?default('')}"/>
+					</td>
+					<td>
+						客户电话：<input id="wageDto.phone" name="wageDto.phone" type="text" size="30" value="${wageDto.phone?default('')}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;&nbsp;&nbsp;
+						身份证：<input id="wageDto.idCardNumber" name="wageDto.idCardNumber" type="text" size="30" value="${wageDto.idCardNumber?default('')}"/>
+					</td>
+					<td>
+						银行账号：<input id="wageDto.bankAccount" name="wageDto.bankAccount" type="text" size="30" value="${wageDto.bankAccount?default('')}"/>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('wageListForm','${request.contextPath}/wage/wageSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="delete" href="${request.contextPath}/wage/wageDeleteAll.htm" title="删除后不可恢复，确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/wage/wageClean.htm" title="删除后不可恢复，确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>清除历史</span></a></li>
+		</ul>
+	</div>
+	<div id="wageListBox" width="100%" layouth="145" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="10%">客户编号</th>
+					<th width="10%">客户名称</th>
+					<th width="10%">联系电话</th>
+					<th width="20%">身份证</th>
+					<th width="8%">开户银行</th>
+					<th width="13%">银行账号</th>
+					<th width="10%">工资</th>
+					<th width="20%">创建时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if wageList?exists> 
+			<#list wageList as wage>
+				<tr target="id" rel="${wage.wageId?default('')}">
+					<td><input type="checkbox" name="ids" value="${wage.wageId?default('')}" /></td>
+					<td><a href="${request.contextPath}/wage/wageView.htm?wageId=${wage.wageId?default('')}" target="navTab" rel="viewWageNavTab" title="业绩详情">${wage.customerCode?default('')}</a></td>
+					<td>${wage.customerName?default('')}</td>
+					<td>${wage.phone?default('')}</td>
+					<td>${wage.idCardNumber?default('')}</td>
+					<td>${wage.bankType?default('')}</td>
+					<td>${wage.bankAccount?default('')}</td>
+					<td>${wage.salary?default('')}</td>
+					<td>
+					<#if wage.createTime?exists>
+						${wage.createTime?string('yyyy-MM-dd HH:mm:ss')}
+					</#if>
+					</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="wageListPaginationBar" name="wageListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var wageListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","wageListPaginationBar","wageListForm",'',"wageListPagination");
+			wageListPagination.render();
+		</script>
+	</div>
+</div>

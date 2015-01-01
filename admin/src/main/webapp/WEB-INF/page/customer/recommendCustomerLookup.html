@@ -1,0 +1,82 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/customer/recommendCustomerList.htm" id="recommendCustomerListForm" name="recommendCustomerListForm" onsubmit="return dialogSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						客户编号：<input id="customerDto.customerCode" name="customerDto.customerCode" type="text" size="30" value="${customerDto.customerCode?default('')}"/>
+					</td>
+					<td>
+						客户名称：<input id="customerDto.customerName" name="customerDto.customerName" type="text" size="30" value="${customerDto.customerName?default('')}"/>
+					</td>
+					<td>
+						身份证：<input id="customerDto.idCardNumber" name="customerDto.idCardNumber" value="${customerDto.idCardNumber?default('')}" type="text" size="30" /> 
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return dialogSearchSubmit('recommendCustomerListForm','${request.contextPath}/customer/recommendCustomerSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div width="100%" layouth="95" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="15%">客户编号</th>
+					<th width="10%">客户名称</th>
+					<th width="10%">客户类型</th>
+					<th width="10%">客户状态</th>
+					<th width="10%">客户等级</th>
+					<th width="20%">联系电话</th>
+					<th width="21%">身份证</th>
+					<th width="4%">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if customerList?exists> 
+			<#list customerList as customer>
+				<tr target="id" rel="${customer.customerId}">
+					<td>${customer.customerCode?default('')}</td>
+					<td><a href="${request.contextPath}/customer/customerView.htm?customerId=${customer.customerId?default('')}" target="navTab" rel="viewCustomerNavTab" title="客户详情">${customer.customerName?default('')}</a></td>
+					<td>
+						<#if customerTypeEnumList?exists>
+							<#list customerTypeEnumList as enum>
+								<#if customer.customerType?exists&&enum.key==customer.customerType>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>
+						<#if customerStatusEnumList?exists>
+							<#list customerStatusEnumList as enum>
+								<#if customer.status?exists&&enum.key==customer.status>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>${customer.level?default('')}级</td>
+					<td>${customer.phone?default('')}</td>
+					<td>${customer.idCardNumber?default('')}</td>
+					<td>
+						<a class="btnSelect" href="javascript:$.bringBack({customerId:'${customer.customerId?default("")}', customerCode:'${customer.customerCode?default("")}', customerName:'${customer.customerName?default("")}', customerType:'${customer.customerType?default("")}'})" title="查找带回">选择</a>
+					</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="recommendCustomerListPaginationBar" name="recommendCustomerListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var recommendCustomerListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","recommendCustomerListPaginationBar","recommendCustomerListForm",'dialog',"recommendCustomerListPagination");
+			recommendCustomerListPagination.render();
+		</script>
+	</div>
+</div>

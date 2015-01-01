@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+	default-autowire="byName">
+
+	<import resource="classpath:context/framework-hibernateContext.xml" />
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${dataSource.Driver}" />
+		<property name="jdbcUrl" value="${dataSource.jdbcUrl}" />
+		<property name="user" value="${dataSource.userName}" />
+		<property name="password" value="${dataSource.password}" />
+		<property name="minPoolSize" value="${dataSource.minPoolSize}" />
+		<property name="maxPoolSize" value="${dataSource.maxPoolSize}" />
+		<property name="maxIdleTime" value="${dataSource.maxIdleTime}" />
+		<property name="acquireIncrement" value="${dataSource.acquireIncrement}" />
+		<property name="initialPoolSize" value="${dataSource.initialPoolSize}" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		p:dataSource-ref="dataSource" parent="parentSessionFactory">
+		<property name="packagesToScan">
+			<list>
+				<value>com.ryan.doubletrack.*.entity</value>
+				<value>com.ryan.*.entity</value>
+			</list>
+		</property>
+	</bean>
+</beans>

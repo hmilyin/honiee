@@ -1,0 +1,99 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/order/orderUpdate.htm" class="pageForm required-validate" onsubmit="return validateCallback(this);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>订单编号：</label>
+				<input id="orderDto.orderCode" name="orderDto.orderCode" readonly="readonly" class="required" value="${orderDto.orderCode?default('')}"/>
+				<input id="orderDto.orderId" name="orderDto.orderId" type="hidden" value="${orderDto.orderId?default('')}"/>
+			</p>
+			<p>
+				<label>客户编号：</label>
+				<input id="orderDto.customerCode" name="orderDto.customerCode" readonly="readonly" class="required" value="${orderDto.customerCode?default('')}"/>
+				<a class="btnLook" href="${request.contextPath}/customer/orderCustomerLookup.htm" lookupGroup="orderDto" lookupPk="customerId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				<input id="orderDto.customerId" name="orderDto.customerId" type="hidden" value="${orderDto.customerId?default('')}"/>
+			</p>
+			<p>
+				<label>客户姓名：</label>
+				<input id="orderDto.customerName" name="orderDto.customerName" readonly="readonly" class="required" value="${orderDto.customerName?default('')}"/>
+			</p>
+			<p>
+				<label>客户类型：</label>
+				<select id="orderDto.customerType" name="orderDto.customerType" readonly="readonly">
+					<option value=-1>----请选择----</option>
+					<#if customerTypeEnumList?exists>
+						<#list customerTypeEnumList as enum>
+							<#if orderDto.customerType?exists&&orderDto.customerType==enum.key>
+								<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+							<#else>
+								<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+							</#if>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<#if orderDto.orderProductListDto?exists>
+				<p>
+					<label>产品名称：</label>
+					<input id="orderDto.orderProductListDto.productName" readonly="readonly" class="required" name="orderDto.orderProductListDto.productName" value="${orderDto.orderProductListDto.productName?default('')}"/>
+					<input id="orderDto.orderProductListDto.id" name="orderDto.orderProductListDto.id" type="hidden" value="${orderDto.orderProductListDto.id?default('')}"/>
+					<input id="orderDto.orderProductListDto.productId" name="orderDto.orderProductListDto.productId" type="hidden" value="${orderDto.orderProductListDto.productId?default('')}"/>
+					<a class="btnLook" href="${request.contextPath}/product/orderProductLookup.htm" lookupGroup="orderDto.orderProductListDto" lookupPk="productId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>产品单价：</label>
+					<input id="orderDto.orderProductListDto.productPrice" readonly="readonly" class="required" name="orderDto.orderProductListDto.productPrice" value="${orderDto.orderProductListDto.productPrice?default('')}"/>
+				</p>
+				<p>
+					<label>产品数量：</label>
+					<input id="orderDto.orderProductListDto.productCount" class="required" name="orderDto.orderProductListDto.productCount" value="${orderDto.orderProductListDto.productCount?default('')}"/>
+				</p>
+			<#else>
+				<p>
+					<label>产品名称：</label>
+					<input id="orderDto.orderProductListDto.productName" readonly="readonly" class="required" name="orderDto.orderProductListDto.productName" value=""/>
+					<input id="orderDto.orderProductListDto.id" name="orderDto.orderProductListDto.id" type="hidden" value=""/>
+					<input id="orderDto.orderProductListDto.productId" name="orderDto.orderProductListDto.productId" type="hidden" value=""/>
+					<a class="btnLook" href="${request.contextPath}/product/orderProductLookup.htm" lookupGroup="orderDto.orderProductListDto" lookupPk="productId" maxable="false" resizable="false"><hi:text key="查找带回"/></a>
+				</p>
+				<p>
+					<label>产品单价：</label>
+					<input id="orderDto.orderProductListDto.productPrice" readonly="readonly" class="required" name="orderDto.orderProductListDto.productPrice" value=""/>
+				</p>
+				<p>
+					<label>产品数量：</label>
+					<input id="orderDto.orderProductListDto.productCount" class="required" name="orderDto.orderProductListDto.productCount" value=""/>
+				</p>
+			</#if>
+			<p>
+				<label>创建时间：</label>
+				<#if orderDto.createTime?exists>
+					<input id="orderDto.createTime" name="orderDto.createTime" value="${orderDto.createTime?string('yyyy-MM-dd HH:mm:ss')}"/>
+				<#else>
+					<input id="orderDto.createTime" name="orderDto.createTime" value=""/>
+				</#if>
+			</p>
+			<p>
+				<label>最后更新时间：</label>
+				<#if orderDto.lastModifyTime?exists>
+					<input id="orderDto.lastModifyTime" name="orderDto.lastModifyTime" value="${orderDto.lastModifyTime?string('yyyy-MM-dd HH:mm:ss')}"/>
+				<#else>
+					<input id="orderDto.lastModifyTime" name="orderDto.lastModifyTime" value=""/>
+				</#if>
+			</p>
+			<dl>
+				<dt>备注：</dt>
+				<dd>
+					<textarea id="orderDto.remark" name="orderDto.remark" value="${orderDto.remark?default('')}" cols="80" rows="5" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

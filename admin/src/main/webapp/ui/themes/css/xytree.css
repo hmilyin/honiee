@@ -1,0 +1,40 @@
+.TreeNode img { 
+	border:0px
+}
+.TreeNode a span { 	
+	font-family:Verdana Arial 宋体;
+	font-size:12px;
+	height:17px;
+	margin-left:3px;	
+	padding:2 3;	
+	cursor:hand;
+}
+
+.TreeNode span { 	
+	font-family:Verdana Arial 宋体;
+	font-size:12px;
+	height:17px;
+	margin-left:3px;	
+	padding:2 3;	
+	cursor:hand;
+}
+.TreeNode .Anchor { 
+	color:#000000;
+	text-decoration:none;
+}
+
+.TreeNode .selected { 
+	color:#000E00;
+	text-decoration:none
+}
+.TreeNode .selected span{ 
+	background-color:#FFFFFF;
+}
+.viewInput
+{	
+    COLOR: #989898;
+	BORDER-BOTTOM:#989898 1px solid; 
+	BORDER-LEFT: #989898 1px solid; 
+	BORDER-RIGHT: #989898 1px solid; 
+	BORDER-TOP: #989898 1px solid;
+}

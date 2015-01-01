@@ -1,0 +1,44 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/spread/spreadSave.htm" class="pageForm required-validate" onsubmit="return validateCallback(this);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>推广请求：</label>
+				<input id="spreadDto.requestUrl" name="spreadDto.requestUrl" type="text" class="required" size="30" value="${spreadDto.requestUrl?default('')}"/>
+			</p>
+			<p>
+				<label>推广渠道：</label>
+				<input id="spreadDto.channel" name="spreadDto.channel" class="required" type="text" size="30" value="${spreadDto.channel?default('')}"/>
+			</p>
+			<p>
+				<label>推广人：</label>
+				<input id="spreadDto.spreadId" name="spreadDto.spreadId" class="required" value="${spreadDto.spreadId?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>二维码目录：</label>
+				<input id="spreadDto.codePath" name="spreadDto.codePath" value="${spreadDto.codePath?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>logo目录：</label>
+				<input id="spreadDto.logoPath" name="spreadDto.logoPath"  value="${spreadDto.logoPath?default('')}" type="text" size="30"  />
+			</p>
+			<p>
+				<label>logo名称：</label>
+				<input id="spreadDto.logoName" name="spreadDto.logoName"  value="${spreadDto.logoName?default('')}" type="text" size="30"  />
+			</p>
+			<dl>
+				<dt>备注：</dt>
+				<dd>
+					<textarea id="spreadDto.mark" name="spreadDto.mark" value="${spreadDto.mark?default('')}" cols="100" rows="8" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

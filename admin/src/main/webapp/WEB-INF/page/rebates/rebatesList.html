@@ -1,0 +1,93 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/rebates/rebatesList.htm" id="rebatesListForm" name="rebatesListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						客户编号：<input id="rebatesDto.customerCode" name="rebatesDto.customerCode" type="text" size="30" value="${rebatesDto.customerCode?default('')}"/>
+					</td>
+					<td>
+						客户名称：<input id="rebatesDto.customerName" name="rebatesDto.customerName" type="text" size="30" value="${rebatesDto.customerName?default('')}"/>
+					</td>
+					<td>
+						客户类型：
+						<select id="rebatesDto.customerType" name="rebatesDto.customerType">
+							<option value=-1>----请选择----</option>
+							<#if customerTypeEnumList?exists>
+								<#list customerTypeEnumList as enum>
+									<#if rebatesDto.customerType?exists&&rebatesDto.customerType==enum.key>
+										<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+									<#else>
+										<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+									</#if>
+								</#list>
+							</#if>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('rebatesListForm','${request.contextPath}/rebates/rebatesSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="delete" href="${request.contextPath}/rebates/resultsOfSettlement.htm" target="navTab" rel="wageListNavTab" title="工资管理"><span>业绩结算</span></a></li>
+		</ul>
+	</div>
+	<div id="rebatesListBox" width="100%" layouth="117" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="15%">客户编号</th>
+					<th width="15%">客户名称</th>
+					<th width="10%">客户类型</th>
+					<th width="10%">销售数量</th>
+					<th width="20%">创建时间</th>
+					<th width="20%">修改时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if rebatesList?exists> 
+			<#list rebatesList as rebates>
+				<tr target="id" rel="${rebates.rebatesId?default('')}">
+					<td><a href="${request.contextPath}/rebates/rebatesView.htm?rebatesId=${rebates.rebatesId?default('')}" target="navTab" rel="viewRebatesNavTab" title="业绩详情">${rebates.customerCode?default('')}</a></td>
+					<td>${rebates.customerName?default('')}</td>
+					<td>
+						<#if customerTypeEnumList?exists>
+							<#list customerTypeEnumList as enum>
+								<#if rebates.customerType?exists&&enum.key==rebates.customerType>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<td>${rebates.count?default('')}</td>
+					<td>
+					<#if rebates.createTime?exists>
+						${rebates.createTime?string('yyyy-MM-dd HH:mm:ss')}
+					</#if>
+					</td>
+					<td>
+					<#if rebates.lastModifyTime?exists>
+						${rebates.lastModifyTime?string('yyyy-MM-dd HH:mm:ss')}
+					</#if>
+					</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="rebatesListPaginationBar" name="rebatesListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var rebatesListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","rebatesListPaginationBar","rebatesListForm",'',"rebatesListPagination");
+			rebatesListPagination.render();
+		</script>
+	</div>
+</div>

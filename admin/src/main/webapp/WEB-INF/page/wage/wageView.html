@@ -1,0 +1,51 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/rebates/rebatesView.htm?rebatesId=${rebatesDto.rebatesId?default('')}" class="pageForm required-validate" onsubmit="return validateCallback(this);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>客户编号：</label>
+				<input id="rebatesDto.customerCode" name="rebatesDto.customerCode" readonly="readonly" readonly="readonly" class="required" value="${rebatesDto.customerCode?default('')}"/>
+			</p>
+			<p>
+				<label>客户姓名：</label>
+				<input id="rebatesDto.customerName" name="rebatesDto.customerName" readonly="readonly" class="required" value="${rebatesDto.customerName?default('')}"/>
+			</p>
+			<p>
+				<label>客户类型：</label>
+				<select id="rebatesDto.customerType" name="rebatesDto.customerType" readonly="readonly">
+					<option value=-1>----请选择----</option>
+					<#if customerTypeEnumList?exists>
+						<#list customerTypeEnumList as enum>
+							<#if rebatesDto.customerType?exists&&rebatesDto.customerType==enum.key>
+								<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+							<#else>
+								<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+							</#if>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>产品数量：</label>
+				<input id="rebatesDto.count" readonly="readonly" class="required" name="rebatesDto.count" value="${rebatesDto.count?default('')}"/>
+			</p>
+			<p>
+				<label>创建时间：</label>
+				<input id="rebatesDto.createTime" name="rebatesDto.createTime" readonly="readonly" value="${rebatesDto.createTime?string('yyyy-MM-dd HH:mm:ss')}"/>
+			</p>
+			<p>
+				<label>最后更新时间：</label>
+				<#if rebatesDto.lastModifyTime?exists>
+					<input id="rebatesDto.lastModifyTime" name="rebatesDto.lastModifyTime" readonly="readonly" value="${rebatesDto.lastModifyTime?string('yyyy-MM-dd HH:mm:ss')}"/>
+				<#else>
+					<input id="rebatesDto.lastModifyTime" name="rebatesDto.lastModifyTime" readonly="readonly" value=""/>
+				</#if>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

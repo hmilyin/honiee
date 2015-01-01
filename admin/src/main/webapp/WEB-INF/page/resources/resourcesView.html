@@ -1,0 +1,116 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/privilage/resourcesEdit.htm" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>资源编号：</label>
+				<input id="resourcesDto.resourcesCode" name="resourcesDto.resourcesCode" type="text" class="required" readonly="readonly" size="30" value="${resourcesDto.resourcesCode?default('')}"/>
+				<input id="resourcesDto.resourcesId" name="resourcesDto.resourcesId" type="hidden" value="${resourcesDto.resourcesId?default('')}"/>
+			</p>
+			<p>
+				<label>资源姓名：</label>
+				<input id="resourcesDto.resourcesName" name="resourcesDto.resourcesName" class="required" readonly="readonly" type="text" size="30" value="${resourcesDto.resourcesName?default('')}"/>
+			</p>
+			<p>
+				<label>资源类型：</label>
+				<input id="resourcesDto.resourceType" name="resourcesDto.resourceType" value="${resourcesDto.resourceType?default('')}" type="text" readonly="readonly" size="30" alt="请输入数字"/>
+			</p>
+			<#if resourcesDto?exists&&resourcesDto.parentResourceDto?exists>
+				<p>
+					<input type="hidden" id="resourcesDto.parentResourceDto.resourceId" name="resourcesDto.parentResourceDto.resourceId" value="${resourcesDto.parentResourceDto.resourceId?default('')}"/>
+					<label>上级资源编号：</label>
+					<input type="text" id="resourcesDto.parentResourceDto.resourceCode" name="resourcesDto.parentResourceDto.resourceCode" readonly="readonly" value="${resourcesDto.parentResourceDto.resourceCode?default('')}"/>
+				</p>
+				<p>
+					<label>上级资源名称：</label>
+					<input type="text" id="resourcesDto.parentResourceDto.resourceName" name="resourcesDto.parentResourceDto.resourceName" readonly="readonly" value="${resourcesDto.parentResourceDto.resourceName?default('')}"/>
+				</p>
+			<#else>
+				<p>
+					<input type="hidden" id="resourcesDto.parentResourceDto.resourceId" name="resourcesDto.parentResourceDto.resourceId" value=""/>
+					<label>上级资源编号：</label>
+					<input readonly="readonly" type="text" id="resourcesDto.parentResourceDto.resourceCode" name="resourcesDto.parentResourceDto.resourceCode" value=""/>
+				</p>
+				<p>
+					<label>上级资源名称：</label>
+					<input type="text" readonly="readonly" id="resourcesDto.parentResourceDto.resourceName" name="resourcesDto.parentResourceDto.resourceName" value=""/>
+				</p>
+			</#if>
+			<p>
+				<label>资源状态：</label>
+				<input id="resourcesDto.status" name="resourcesDto.status" value="${resourcesDto.status?default('')}" type="text" readonly="readonly" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>url：</label>
+				<input id="resourcesDto.url" name="resourcesDto.url" value="${resourcesDto.url?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>个人电话：</label>
+				<input id="resourcesDto.personalTel" name="resourcesDto.personalTel" value="${resourcesDto.personalTel?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>个人手机：</label>
+				<input id="resourcesDto.personalPhone" name="resourcesDto.personalPhone" value="${resourcesDto.personalPhone?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>个人Email：</label>
+				<input id="resourcesDto.personalEmail" name="resourcesDto.personalEmail" value="${resourcesDto.personalEmail?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>身份证：</label>
+				<input id="resourcesDto.idCard" name="resourcesDto.idCard" value="${resourcesDto.idCard?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>生日：</label>
+				<input id="resourcesDto.birthday" name="resourcesDto.birthday" value="${resourcesDto.birthday?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>学历：</label>
+				<input id="resourcesDto.education" name="resourcesDto.education" value="${resourcesDto.education?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>爱好：</label>
+				<input id="resourcesDto.hobby" name="resourcesDto.hobby" value="${resourcesDto.hobby?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>特长：</label>
+				<input id="resourcesDto.specialty" name="resourcesDto.specialty" value="${resourcesDto.specialty?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>邮编：</label>
+				<input id="resourcesDto.zipCode" name="resourcesDto.zipCode" value="${resourcesDto.zipCode?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>激活时间：</label>
+				<input id="resourcesDto.regeditDate" name="resourcesDto.regeditDate" value="${resourcesDto.regeditDate?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>创建时间：</label>
+				<input id="resourcesDto.createTime" name="resourcesDto.createTime" value="${resourcesDto.createTime?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<p>
+				<label>修改时间：</label>
+				<input id="resourcesDto.lastModifyTime" name="resourcesDto.lastModifyTime" value="${resourcesDto.lastModifyTime?default('')}" type="text" readonly="readonly" size="30" />
+			</p>
+			<dl>
+				<dt>家庭地址：</dt>
+				<dd>
+					<textarea id="resourcesDto.homeAddress" name="resourcesDto.homeAddress" value="${resourcesDto.homeAddress?default('')}" cols="80" rows="1" name="source"></textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt>个人履历：</dt>
+				<dd>
+					<textarea id="resourcesDto.training" name="resourcesDto.training" value="${resourcesDto.training?default('')}" cols="80" rows="5" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

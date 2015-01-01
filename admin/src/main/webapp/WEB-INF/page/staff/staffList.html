@@ -1,0 +1,78 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/staff/staffList.htm" id="staffListForm" name="staffListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						员工编号：<input id="staffDto.staffCode" name="staffDto.staffCode" size="30" value="${staffDto.staffCode?default('')}"/>
+					</td>
+					<td>
+						员工名称：<input id="staffDto.staffName" name="staffDto.staffName" size="30" value="${staffDto.staffName?default('')}"/>
+					</td>
+					<td>
+						身份证：<input id="staffDto.idCard" name="staffDto.idCard" size="30" value="${staffDto.idCard?default('')}"/> 
+					</td>
+				</tr>
+				<tr>
+					 <td></td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('staffListForm','${request.contextPath}/staff/staffSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/staff/staffAdd.htm" target="navTab" rel="addStaffNavTab" title="新建员工"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/staff/staffEdit.htm?staffId={id}" target="navTab" rel="editStaffNavTab" title="修改员工"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/staff/staffDeleteAll.htm" title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:;"><span>导入EXCEL</span></a></li>
+		</ul>
+	</div>
+	<div width="100%" layouth="145" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="33"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="10%">员工编号</th>
+					<th width="8%">员工名称</th>
+					<th width="7%">性别</th>
+					<th width="12%">办公手机号</th>
+					<th width="15%">身份证号</th>
+					<th width="16%">电子邮件</th>
+					<th width="17%">创建时间</th>
+					<th width="15%">最后修改时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if staffList?exists> 
+			<#list staffList as staff>
+				<tr target="id" rel="${staff.staffId}">
+					<td><input type="checkbox" name="ids" value="${staff.staffId?default('')}" /></td>
+					<td>${staff.staffCode?default('')}</td>
+					<td><a href="${request.contextPath}/staff/staffView.htm?staffId=${staff.staffId?default('')}" target="navTab" rel="viewStaffNavTab" title="员工详情">${staff.staffName?default('')}</a></td>
+					<td>${staff.gender?default('')}</td>
+					<td>${staff.officePhone?default('')}</td>
+					<td>${staff.idCard?default('')}</td>
+					<td>${staff.personalEmail?default('')}</td>
+					<td>${staff.createTime?default('')}</td>
+					<td>${staff.lastModifyTime?default('')}</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="staffListPaginationBar" name="staffListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+		 	var staffListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","staffListPaginationBar","staffListForm",'',"staffListPagination");
+		 	staffListPagination.render();
+		</script>
+	</div>
+</div>

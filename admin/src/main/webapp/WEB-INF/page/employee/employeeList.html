@@ -1,0 +1,109 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/privilage/employeeList.htm" id="employeeListForm" name="employeeListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						员工编号：<input id="employeeDto.employeeCode" name="employeeDto.employeeCode" value="${employeeDto.employeeCode?default('')}"/>
+					</td>
+					<td>
+						员工名称：<input id="employeeDto.employeeName" name="employeeDto.employeeName" value="${employeeDto.employeeName?default('')}"/>
+					</td>
+					<td>
+						入职时间：&nbsp;&nbsp;&nbsp;&nbsp;从<input id="employeeDto.fromCreateTime" name="employeeDto.fromCreateTime" class="date"/> 
+					</td>
+					<td>
+						至<input id="employeeDto.toCreateTime" name="employeeDto.toCreateTime" class="date"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						所属机构：<select id="employeeDto.organizationDto.organizationId" name="employeeDto.organizationDto.organizationId" style="width:133px">
+							<option value=-1>---------请选择---------</option>
+						<#if allOrganizationList?exists> 
+						<#list allOrganizationList as organization>
+							<#if employeeDto.organizationDto?exists&&employeeDto.organizationDto.organizationId==organization.organizationId>
+								<option value=${organization.organizationId?default(-1)} selected="selected">${organization.organizationName?default('')}</option>
+							<#else>
+								<option value=${organization.organizationId?default(-1)}>${organization.organizationName?default('')}</option>
+							</#if>
+						</#list> 
+						</#if>
+						</select>
+						<!-- 
+						<input id="employeeDto.organizations" name="employeeDto.organizations" value="${employeeDto.organizations?default('')}" type="text"/>
+						
+						<a href="${request.contextPath}/organization/organizationSelect" target="dialog" title="[选择组织结构]" close="selectOrganizationOnClosed" param="{selectedOrganization:'selectedOrganization',selectOrganizationCheckBox:'selectOrganizationCheckBox'}" width="800" height="480">
+							<img alt="查找机构" src="${request.contextPath}/ui/themes/default/images/search.gif"/>
+						</a>
+						 -->	
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('employeeListForm','${request.contextPath}/privilage/employeeSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/privilage/employeeAdd.htm" target="navTab" rel="addEmployeeNavTab" title="新建员工"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/privilage/employeeView.htm?employeeId={id}" target="navTab" rel="editEmployeeNavTab" title="修改员工"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/privilage/employeeDeleteAll.htm" title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:;"><span>导入EXCEL</span></a></li>
+		</ul>
+	</div>
+	<div width="100%" layouth="145" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="3%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="10%">员工编号</th>
+					<th width="8%">员工名称</th>
+					<th width="10%">所属机构</th>
+					<th width="10%">员工职位</th>
+					<th width="28%">电子邮件</th>
+					<th width="13%">创建时间</th>
+					<th width="13%">最后更新时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if employeeList?exists> 
+			<#list employeeList as employee>
+				<tr target="id" rel="${employee.employeeId}">
+					<td><input type="checkbox" name="ids" value="${employee.employeeId?default('')}" /></td>
+					<td>${employee.employeeCode?default('')}</td>
+					<td><a href="${request.contextPath}/privilage/employeeView.htm?employeeId=${employee.employeeId?default('')}" target="navTab" rel="viewEmployeeNavTab" title="员工详情">${employee.employeeName?default('')}</a></td>
+					<#if employee.organizationDto?exists>
+						<td>${employee.organizationDto.organizationName?default('')}</td>
+					<#else>
+						<td></td>
+					</#if>
+					<#if employee.positionDto?exists>
+					<td>${employee.positionDto.positionName?default('')}</td>
+					<#else>
+						<td></td>
+					</#if>
+					<td>${employee.personalEmail?default('')}</td>
+					<td>${employee.createTime?default('')}</td>
+					<td>${employee.lastModifyTime?default('')}</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="employeeListPaginationBar" name="employeeListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var employeeListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","employeeListPaginationBar","employeeListForm",'',"employeeListPagination");
+			employeeListPagination.render();
+		</script>
+	</div>
+</div>

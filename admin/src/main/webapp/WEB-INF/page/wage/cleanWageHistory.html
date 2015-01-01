@@ -1,0 +1,22 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/wage/cleanWageHistory.htm" class="pageForm required-validate" onsubmit="return validateCallback(this);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>起始时间：</label>
+				<input id="wageDto.startCreateTime" name="wageDto.startCreateTime" type="text" class="date" format="yyyy-MM-dd HH:mm:ss" readonly="true" value="${wageDto.startCreateTime?default('')}"/>
+				<a class="inputDateButton" href="javascript:;">选择</a>
+			</p>
+			<p>
+				<label>截止时间：</label>
+				<input id="wageDto.endCreateTime" name="wageDto.endCreateTime" type="text" class="date" format="yyyy-MM-dd HH:mm:ss" readonly="true" value="${wageDto.endCreateTime?default('')}"/>
+				<a class="inputDateButton" href="javascript:;">选择</a>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">清除</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+</form>

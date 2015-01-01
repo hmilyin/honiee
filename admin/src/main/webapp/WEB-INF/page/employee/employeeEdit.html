@@ -1,0 +1,133 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/privilage/employeeEdit.htm" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>员工编号：</label>
+				<input id="employeeDto.employeeCode" name="employeeDto.employeeCode" type="text" class="required" size="30" value="${employeeDto.employeeCode?default('')}"/>
+				<input id="employeeDto.employeeId" name="employeeDto.employeeId" type="hidden" value="${employeeDto.employeeId?default('')}"/>
+			</p>
+			<p>
+				<label>员工姓名：</label>
+				<input id="employeeDto.employeeName" name="employeeDto.employeeName" class="required" type="text" size="30" value="${employeeDto.employeeName?default('')}"/>
+			</p>
+			<p>
+				<label>组织名称：</label>
+				<select id="employeeDto.organizationDto.organizationId" name="employeeDto.organizationDto.organizationId">
+					<option value="-1">----请选择----</option>
+					<#if allOrganizationList?exists>
+						<#list allOrganizationList as organizationDto>
+							<#if employeeDto.organizationDto?exists&&employeeDto.organizationDto.organizationId?exists>
+								<#if organizationDto.organizationId?exists&&employeeDto.organizationDto.organizationId.equals(organizationDto.organizationId)>
+									<option value="${organizationDto.organizationId?default('')}" selected="selected">${organizationDto.organizationName?default('')}</option>
+								<#else>
+									<option value="${organizationDto.organizationId?default('')}">${organizationDto.organizationName?default('')}</option>
+								</#if>
+							<#else>
+								<option value="${organizationDto.organizationId?default('')}">${organizationDto.organizationName?default('')}</option>
+							</#if>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>职位名称：</label>
+				<select id="employeeDto.positionDto.positionId" name="employeeDto.positionDto.positionId" >
+					<option value="-1">----请选择----</option>
+					<#if allPositionList?exists>
+						<#list allPositionList as positionDto>
+							<#if employeeDto.positionDto?exists&&employeeDto.positionDto.positionId?exists>
+								<#if positionDto.positionId?exists&&employeeDto.positionDto.positionId.equals(positionDto.positionId)>
+									<option value="${positionDto.positionId?default('')}" selected="selected">${positionDto.positionName?default('')}</option>
+								<#else>
+									<option value="${positionDto.positionId?default('')}">${positionDto.positionName?default('')}</option>
+								</#if>
+							<#else>
+								<option value="${positionDto.positionId?default('')}">${positionDto.positionName?default('')}</option>
+							</#if>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>办公电话：</label>
+				<input id="employeeDto.officeTel" name="employeeDto.officeTel" value="${employeeDto.officeTel?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>办公手机：</label>
+				<input id="employeeDto.officePhone" name="employeeDto.officePhone" value="${employeeDto.officePhone?default('')}" type="text" size="30" alt="请输入数字"/>
+			</p>
+			<p>
+				<label>办公Email：</label>
+				<input id="employeeDto.officeEmail" name="employeeDto.officeEmail" value="${employeeDto.officeEmail?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人电话：</label>
+				<input id="employeeDto.personalTel" name="employeeDto.personalTel" value="${employeeDto.personalTel?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人手机：</label>
+				<input id="employeeDto.personalPhone" name="employeeDto.personalPhone" value="${employeeDto.personalPhone?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>个人Email：</label>
+				<input id="employeeDto.personalEmail" name="employeeDto.personalEmail" value="${employeeDto.personalEmail?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>身份证：</label>
+				<input id="employeeDto.idCard" name="employeeDto.idCard" value="${employeeDto.idCard?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>生日：</label>
+				<input id="employeeDto.birthday" name="employeeDto.birthday" value="${employeeDto.birthday?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>学历：</label>
+				<input id="employeeDto.education" name="employeeDto.education" value="${employeeDto.education?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>爱好：</label>
+				<input id="employeeDto.hobby" name="employeeDto.hobby" value="${employeeDto.hobby?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>特长：</label>
+				<input id="employeeDto.specialty" name="employeeDto.specialty" value="${employeeDto.specialty?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>邮编：</label>
+				<input id="employeeDto.zipCode" name="employeeDto.zipCode" value="${employeeDto.zipCode?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>激活时间：</label>
+				<input id="employeeDto.regeditDate" name="employeeDto.regeditDate" value="${employeeDto.regeditDate?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>创建时间：</label>
+				<input id="employeeDto.createTime" name="employeeDto.createTime" value="${employeeDto.createTime?default('')}" type="text" size="30" />
+			</p>
+			<p>
+				<label>修改时间：</label>
+				<input id="employeeDto.lastModifyTime" name="employeeDto.lastModifyTime" value="${employeeDto.lastModifyTime?default('')}" type="text" size="30" />
+			</p>
+			<dl>
+				<dt>家庭地址：</dt>
+				<dd>
+					<textarea id="employeeDto.homeAddress" name="employeeDto.homeAddress" value="${employeeDto.homeAddress?default('')}" cols="80" rows="1" name="source"></textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt>个人履历：</dt>
+				<dd>
+					<textarea id="employeeDto.training" name="employeeDto.training" value="${employeeDto.training?default('')}" cols="80" rows="5" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">重置</button></div></div> </li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,54 @@
+<#assign s=JspTaglibs["/WEB-INF/tld/struts-tags.tld"] />
+<form method="post" action="${request.contextPath}/product/productView.htm" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+	<div class="pageContent">
+		<div class="pageFormContent nowrap" layoutH="56">
+			<p>
+				<label>产品名称：</label>
+				<input id="productDto.productId" name="productDto.productId" type="hidden" value="${productDto.productId?default('')}"/>
+				<input readonly="readonly" id="productDto.productName" name="productDto.productName" value="${productDto.productName?default('')}"/>
+			</p>
+			<p>
+				<label>扩展名称：</label>
+				<input readonly="readonly" id="productDto.productExpandName" name="productDto.productExpandName" value="${productDto.productExpandName?default('')}"/>
+			</p>
+			<p>
+				<label>类别编号：</label>
+				<select id="productDto.categoryId" name="productDto.categoryId" readonly="readonly">
+					<option value=-1>----请选择----</option>
+					<#if productCategoryEnumList?exists>
+						<#list productCategoryEnumList as enum>
+							<#if productDto.categoryId?exists&&productDto.categoryId==enum.key>
+								<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+							<#else>
+								<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+							</#if>
+						</#list>
+					</#if>
+				</select>
+			</p>
+			<p>
+				<label>产品数量：</label>
+				<input readonly="readonly" id="productDto.productTotalCount" name="productDto.productTotalCount" value="${productDto.productTotalCount?default('')}"/>
+			</p>
+			<p>
+				<label>基本价格：</label>
+				<input readonly="readonly" id="productDto.basicPrice" name="productDto.basicPrice" value="${productDto.basicPrice?default('')}"/>
+			</p>
+			<p>
+				<label>商家产品编码：</label>
+				<input readonly="readonly" id="productDto.merchantProductCode" name="productDto.merchantProductCode" value="${productDto.merchantProductCode?default('')}"/>
+			</p>
+			<dl>
+				<dt>产品描述：</dt>
+				<dd>
+					<textarea readonly="readonly" id="productDto.description" name="productDto.description" value="${productDto.description?default('')}" cols="80" rows="5" name="source"></textarea>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div> </li>
+			</ul>
+		</div>
+	</div>
+</form>

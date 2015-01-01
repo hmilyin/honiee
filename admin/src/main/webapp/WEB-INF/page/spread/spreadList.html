@@ -1,0 +1,76 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/spread/spreadList.htm" id="spreadListForm" name="spreadListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						渠道：<input id="spreadDto.channel" name="spreadDto.channel" size="30" value="${spreadDto.channel?default('')}"/>
+					</td>
+					<td>
+						推广人：<input id="spreadDto.spreadId" name="spreadDto.spreadId" size="30" value="${spreadDto.spreadId?default('')}"/>
+					</td>
+					<td>
+						二维码名称：<input id="spreadDto.codeName" name="spreadDto.codeName" size="30" value="${spreadDto.codeName?default('')}"/> 
+					</td>
+				</tr>
+				<tr>
+					 <td></td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('spreadListForm','${request.contextPath}/spread/spreadSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/spread/spreadAdd.htm" target="navTab" rel="addSpreadNavTab" title="添加推广"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/spread/spreadEdit.htm?Id={id}" target="navTab" rel="editSpreadNavTab" title="修改推广"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/spread/spreadDeleteAll.htm" title="确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:;"><span>导入EXCEL</span></a></li>
+		</ul>
+	</div>
+	<div width="100%" layouth="145" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="33"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="14%">推广请求</th>
+					<th width="14%">推广渠道</th>
+					<th width="14%">推广人</th>
+					<th width="14%">二维码名称</th>
+					<th width="14%">备注</th>
+					<th width="15%">二维码路径</th>
+					<th width="15%">logo路径</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if spreadList?exists> 
+			<#list spreadList as spread>
+				<tr target="id" rel="${spread.Id?default('')}">
+					<td><input type="checkbox" name="ids" value="${spread.Id?default('')}" /></td>
+					<td>${spread.requestUrl?default('')}</td>
+					<td>${spread.channel?default('')}</td>
+					<td>${spread.spreadId?default('')}</td>
+					<td>${spread.codeName?default('')}</td>
+					<td>${spread.mark?default('')}</td>
+					<td>${spread.codePath?default('')}</td>
+					<td>${spread.logoPath?default('')}</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="spreadListPaginationBar" name="spreadListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+		 	var spreadListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","spreadListPaginationBar","spreadListForm",'',"spreadListPagination");
+		 	spreadListPagination.render();
+		</script>
+	</div>
+</div>

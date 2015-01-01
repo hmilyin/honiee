@@ -1,0 +1,127 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>欢迎登陆双轨管理系统</title>
+<script src="${request.contextPath}/ui/js/ryan.ajax.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+*{overflow:hidden; font-size:9pt;}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-image: url(${request.contextPath}/ui/themes/default/images/login/bg.gif);
+	background-repeat: repeat-x;
+}
+-->
+</style>
+</head>
+
+<body>
+<form id="loginForm" name="loginForm" action="${request.contextPath}/system/login.htm" method="post">
+<table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="561" style="background:url(${request.contextPath}/ui/themes/default/images/login/lbg.gif)"><table width="940" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="238" style="background:url(${request.contextPath}/ui/themes/default/images/login/login01.jpg)">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="190"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="208" height="190" style="background:url(${request.contextPath}/ui/themes/default/images/login/login02.jpg)">&nbsp;</td>
+                <td width="518" style="background:url(${request.contextPath}/ui/themes/default/images/login/login03.jpg)"><table width="320" border="0" align="center" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="40" height="40"><img src="${request.contextPath}/ui/themes/default/images/login/user.gif" width="30" height="30"></td>
+                    <td width="38" height="40">用户</td>
+                    <td width="242" height="40"><input type="text" name="operatorDto.loginName" id="operatorDto.loginName" style="width:164px; height:32px; line-height:34px; background:url(${request.contextPath}/ui/themes/default/images/login/inputbg.gif) repeat-x; border:solid 1px #d1d1d1; font-size:9pt; font-family:Verdana, Geneva, sans-serif;"></td>
+                  </tr>
+                  <tr>
+                    <td height="40"><img src="${request.contextPath}/ui/themes/default/images/login/password.gif" width="28" height="32"></td>
+                    <td height="40">密码</td>
+                    <td height="40"><input type="password" name="operatorDto.password" id="operatorDto.password" style="width:164px; height:32px; line-height:34px; background:url(${request.contextPath}/ui/themes/default/images/login/inputbg.gif) repeat-x; border:solid 1px #d1d1d1; font-size:9pt; "></td>
+                  </tr>
+                  <tr>
+                    <td height="30">&nbsp;</td>
+                    <td height="30"><INPUT id=saveInfo value="" type=checkbox name=saveInfo></td>
+                    <td height="30">保存我的登录信息</td>
+                  </tr>
+                  <tr>
+                    <td height="40">&nbsp;</td>
+                    <td height="40">&nbsp;</td>
+                    <td height="60"><img src="${request.contextPath}/ui/themes/default/images/login/login.gif" onclick="checkedLogin()" width="95" height="34"></td>
+                  </tr>
+                </table></td>
+                <td width="214" style="background:url(${request.contextPath}/ui/themes/default/images/login/login04.jpg)" >&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="133" style="background:url(${request.contextPath}/ui/themes/default/images/login/login05.jpg)">&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</form>
+</body>
+<SCRIPT language=javascript>
+
+if(getCookies("shaungui_username"))
+{
+	document.getElementById("operatorDto.loginName").value=getCookies("shaungui_username");
+}
+if(getCookies("shaungui_password"))
+{
+	document.getElementById("operatorDto.password").value=getCookies("shaungui_password");
+}
+
+
+function setCookies(name,value)
+{
+   var Days = 360; //此 cookie 将被保存 360 天
+   var exp= new Date();     //new Date("December 31, 9998");
+   exp.setTime(exp.getTime() + Days*24*60*60*1000);
+   document.cookie = name + "="+ escape(value) +";expires="+ exp.toGMTString();
+}
+
+function getCookies(name)
+{
+   var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+   if(arr != null) return unescape(arr[2]); return null;
+}
+
+function checkedLogin(){
+	if(document.getElementById("operatorDto.loginName").value==""){
+		alert("请填写用户名！");
+		document.getElementById("operatorDto.loginName").focus();
+		return false;
+	}
+	if(document.getElementById("operatorDto.password").value==""){
+		alert("请填写密码！");
+		document.getElementById("operatorDto.password").focus();
+		return false;
+	}
+	
+	if (document.getElementById("saveInfo").checked)
+	{
+		setCookies("shaungui_username",document.getElementById("operatorDto.loginName").value);
+		setCookies("shaungui_password",document.getElementById("operatorDto.password").value);		
+	}
+	/* 
+	var imageText = document.getElementById("checkCode").value;
+	if(imageText==""){
+		alert("请输入验证码！");
+		document.getElementById("checkCode").focus();
+		return false;
+	}
+ 	*/
+
+	//登录
+	mySubmit("loginForm", "${request.contextPath}/system/login.htm", "post");
+}
+</SCRIPT>
+</html>

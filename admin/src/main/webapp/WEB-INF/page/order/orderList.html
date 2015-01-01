@@ -1,0 +1,112 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/order/orderList.htm" id="orderListForm" name="orderListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						订单编号：<input id="orderDto.orderCode" name="orderDto.orderCode" type="text" size="30" value="${orderDto.orderCode?default('')}"/>
+					</td>
+					<td>
+						客户编号：<input id="orderDto.customerCode" name="orderDto.customerCode" type="text" size="30" value="${orderDto.customerCode?default('')}"/>
+					</td>
+					<td>
+						客户名称：<input id="orderDto.customerName" name="orderDto.customerName" type="text" size="30" value="${orderDto.customerName?default('')}"/>
+					</td>
+					<td>
+						客户类型：
+						<select id="orderDto.customerType" name="orderDto.customerType">
+							<option value=-1>----请选择----</option>
+							<#if customerTypeEnumList?exists>
+								<#list customerTypeEnumList as enum>
+									<#if orderDto.customerType?exists&&orderDto.customerType==enum.key>
+										<option value="${enum.key?default('')}" selected="selected">${enum.value?default('')}</option>
+									<#else>
+										<option value="${enum.key?default('')}">${enum.value?default('')}</option>
+									</#if>
+								</#list>
+							</#if>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('orderListForm','${request.contextPath}/order/orderSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="${request.contextPath}/order/orderAdd.htm" target="navTab" rel="addOrderNavTab" title="新建订单"><span>添加</span></a></li>
+			<li><a class="edit" href="${request.contextPath}/order/orderEdit.htm?orderId={id}" target="navTab" rel="editOrderNavTab" title="修改订单"><span>修改</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/order/orderDelete.htm?orderId={id}" title="删除后不可恢复，确实要删除吗?" target="ajaxTodo"><span>删除</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/order/orderDeleteAll.htm" title="删除后不可恢复，确实要删除这些记录吗?" target="selectedTodo" rel="ids"><span>批量删除</span></a></li>
+			<li><a class="delete" href="${request.contextPath}/order/orderClean.htm" target="navTab" rel="cleanOrderNavTab" title="清除历史数据"><span>清除历史数据</span></a></li>
+		</ul>
+	</div>
+	<div width="100%" layouth="117" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="11%">订单编号</th>
+					<th width="11%">客户编号</th>
+					<th width="10%">客户名称</th>
+					<th width="10%">客户类型</th>
+					<th width="10%">产品名称</th>
+					<th width="10%">产品价格</th>
+					<th width="8%">数量</th>
+					<th width="8%">总价</th>
+					<th width="11%">创建时间</th>
+					<th width="11%">更新时间</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if orderList?exists> 
+			<#list orderList as order>
+				<tr target="id" rel="${order.orderId?default('')}">
+					<td><input type="checkbox" name="ids" value="${order.orderId?default('')}" /></td>
+					<td><a href="${request.contextPath}/order/orderView.htm?orderId=${order.orderId?default('')}" target="navTab" rel="viewOrderNavTab" title="订单详情">${order.orderCode?default('')}</a></td>
+					<td>${order.customerCode?default('')}</td>
+					<td>${order.customerName?default('')}</td>
+					<td>
+						<#if customerTypeEnumList?exists>
+							<#list customerTypeEnumList as enum>
+								<#if order.customerType?exists&&enum.key==order.customerType>
+									${enum.value?default('')}
+								</#if>
+							</#list>
+						</#if>
+					</td>
+					<#if order.orderProductListDto?exists>
+						<td>${order.orderProductListDto.productName?default('')}</td>
+						<td>${order.orderProductListDto.productPrice?default('')}</td>
+						<td>${order.orderProductListDto.productCount?default('')}</td>
+					<#else>
+						<td></td>
+						<td></td>
+						<td></td>
+					</#if>
+					<td>${order.totalPrice?default('')}</td>
+					<td>${order.createTime?default('')}</td>
+					<td>
+					<#if order.lastModifyTime?exists>
+						${order.lastModifyTime?string('yyyy-MM-dd HH:mm:ss')}
+					</#if>
+					</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="orderListPaginationBar" name="orderListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var orderListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","orderListPaginationBar","orderListForm",'',"orderListPagination");
+			orderListPagination.render();
+		</script>
+	</div>
+</div>

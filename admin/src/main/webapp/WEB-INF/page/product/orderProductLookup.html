@@ -1,0 +1,64 @@
+<div class="pageHeader">
+	<form action="${request.contextPath}/product/orderProductList.htm" id="orderProductListForm" name="orderProductListForm" onsubmit="return navTabSearch(this);" method="post">
+		<div class="searchBar" >
+			<table class="searchContent">
+				<tr>
+					<td>
+						产品名称：<input id="productDto.productName" name="productDto.productName" type="text" value="${productDto.productName?default('')}"/>
+					</td>
+					<td>
+						扩展名称：<input id="productDto.productExpandName" name="productDto.productExpandName" type="text" value="${productDto.productExpandName?default('')}"/>
+					</td>
+					<td>
+						商家产品编码：<input id="productDto.merchantProductCode" name="productDto.merchantProductCode" value="${productDto.merchantProductCode?default('')}" type="text"/> 
+					</td>
+				</tr>
+			</table>
+			<div class="subBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="return navTabSearchSubmit('orderProductListForm','${request.contextPath}/product/orderProductSearch.htm')">查询</button></div></div></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div width="100%" layouth="95" style="height: 160px; overflow: auto;">
+		<table class="list" targettype="navTab">
+			<thead>
+				<tr>
+					<th width="20%">产品名称</th>
+					<th width="20%">扩展名称</th>
+					<th width="10%">类别</th>
+					<th width="10%">产品数量</th>
+					<th width="10%">基本价格</th>
+					<th width="25%">商家产品编码</th>
+					<th width="60">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<#if productList?exists> 
+			<#list productList as product>
+				<tr target="id" rel="${product.productId}">
+					<td><a mask="true" href="${request.contextPath}/product/productView.htm?productId=${product.productId?default('')}" target="navTab" rel="viewProductNavTab" title="产品详情">${product.productName?default('')}</a></td>
+					<td>${product.productExpandName?default('')}</td>
+					<td>${product.categoryId?default('')}</td>
+					<td>${product.productTotalCount?default('')}</td>
+					<td>${product.basicPrice?default('')}</td>
+					<td>${product.merchantProductCode?default('')}</td>
+					<td>
+						<a class="btnSelect" href="javascript:$.bringBack({productId:'${product.productId?default("")}', productName:'${product.productName?default("")}', productPrice:'${product.basicPrice?default("")}'})" title="查找带回">选择</a>
+					</td>
+				</tr>
+			</#list> 
+			</#if>
+			</tbody>
+		</table>
+	</div>
+	<div id="orderProductListPaginationBar" name="orderProductListPaginationBar" class="panelBar" align="center">
+		<script type="text/javascript">
+			var orderProductListPagination = new Ryan.Pagination("${page.pageSize}","${page.targetPage}","${page.totalRecord}","${page.totalPage}","orderProductListPaginationBar","orderProductListForm",'',"orderProductListPagination");
+			orderProductListPagination.render();
+		</script>
+	</div>
+</div>
